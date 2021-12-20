@@ -3,7 +3,6 @@ def question_bank(index):
                 "smile",
                 "surprise",
                 "blink eyes",
-                "angry",
                 "turn face right",
                 "turn face left"]
     return questions[index]
