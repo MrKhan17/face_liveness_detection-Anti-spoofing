@@ -1,6 +1,5 @@
 import config as cfg
 import dlib
-import cv2
 import numpy as np
 from imutils import face_utils
 from scipy.spatial import distance as dist
@@ -9,15 +8,14 @@ from scipy.spatial import distance as dist
 
 class eye_blink_detector():
     def __init__(self):
-        # cargar modelo para deteccion de puntos de ojos
+        #load model for eye point detection
         self.predictor_eyes = dlib.shape_predictor(cfg.eye_landmarks)
 
     def eye_blink(self,gray,rect,COUNTER,TOTAL):
         (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
         (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
         # determine the facial landmarks for the face region, then
-        # convert the facial landmark (x, y)-coordinates to a NumPy
-        # array
+        # convert the facial landmark (x, y)-coordinates to a NumPy array
         shape = self.predictor_eyes(gray, rect)
         shape = face_utils.shape_to_np(shape)
         # extract the left and right eye coordinates, then use the

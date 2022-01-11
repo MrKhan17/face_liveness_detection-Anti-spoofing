@@ -15,21 +15,21 @@ def challenge_result(question, out_model,blinks_up):
         else:
             challenge = "fail"
     
-    elif question == "surprise":
-        if len(out_model["emotion"]) == 0:
-            challenge = "fail"
-        elif out_model["emotion"][0] == "surprise": 
-            challenge = "pass"
-        else:
-            challenge = "fail"
-
-    elif question == "angry":
-        if len(out_model["emotion"]) == 0:
-            challenge = "fail"
-        elif out_model["emotion"][0] == "angry": 
-            challenge = "pass"
-        else:
-            challenge = "fail"
+    # elif question == "surprise":
+    #     if len(out_model["emotion"]) == 0:
+    #         challenge = "fail"
+    #     elif out_model["emotion"][0] == "surprise":
+    #         challenge = "pass"
+    #     else:
+    #         challenge = "fail"
+    #
+    # elif question == "angry":
+    #     if len(out_model["emotion"]) == 0:
+    #         challenge = "fail"
+    #     elif out_model["emotion"][0] == "angry":
+    #         challenge = "pass"
+    #     else:
+    #         challenge = "fail"
 
     elif question == "turn face right":
         if len(out_model["orientation"]) == 0:
