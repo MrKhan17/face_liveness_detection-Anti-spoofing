@@ -4,7 +4,7 @@ import imutils
 import f_liveness_detection
 import questions
 
-# instanciar camara
+# instantiate camera
 cv2.namedWindow('liveness_detection')
 cam = cv2.VideoCapture(0)
 
@@ -28,7 +28,7 @@ def show_image(cam,text,color = (0,0,255)):
 
 
 for i_questions in range(0,limit_questions):
-    # genero aleatoriamente pregunta
+    # generate random question
     index_question = random.randint(0,4)
     question = questions.question_bank(index_question)
     
@@ -38,11 +38,11 @@ for i_questions in range(0,limit_questions):
         break 
 
     for i_try in range(limit_try):
-        # <----------------------- ingestar data 
+        # <----------------------- receive data
         ret, im = cam.read()
         im = imutils.resize(im, width=720)
         im = cv2.flip(im, 1)
-        # <----------------------- ingestar data 
+        # <----------------------- receive data
         TOTAL_0 = TOTAL
         out_model = f_liveness_detection.detect_liveness(im,COUNTER,TOTAL_0)
         TOTAL = out_model['total_blinks']

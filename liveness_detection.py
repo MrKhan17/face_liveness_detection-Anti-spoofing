@@ -1,4 +1,3 @@
-import cv2
 import f_liveness_detection
 import cv2
 import numpy as np
@@ -20,7 +19,7 @@ def bounding_box(img,box,match_name=[]):
     return img
 
 
-# inicializar conteo de parpadeos
+# initialize blink count
 COUNTER,TOTAL = 0,0
 input_type = "webcam"
 

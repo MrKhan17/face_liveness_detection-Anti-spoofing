@@ -3,16 +3,16 @@ detect_frontal_face = 'profile_detection/haarcascades/haarcascade_frontalface_al
 detect_perfil_face = 'profile_detection/haarcascades/haarcascade_profileface.xml'
 
 # -------------------------------------- emotion_detection ---------------------------------------
-# modelo de deteccion de emociones
+# emotion detection model
 path_model = 'emotion_detection/Modelos/model_dropout.hdf5'
-# Parametros del modelo, la imagen se debe convertir a una de tamaño 48x48 en escala de grises
+# Model parameters, the image must be converted to a 48x48 grayscale size
 w,h = 48,48
 rgb = False
 labels = ['angry','disgust','fear','happy','neutral','sad','surprise']
 
 
-# definir la relacion de aspecto del ojo EAT
-# definir el numero de frames consecutivos que debe estar por debajo del umbral
+# define the aspect ratio of the EAT eye
+# define the number of consecutive frames that must be below the threshold
 EYE_AR_THRESH = 0.23 #baseline
 EYE_AR_CONSEC_FRAMES = 1
 
