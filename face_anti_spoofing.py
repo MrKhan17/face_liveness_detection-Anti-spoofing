@@ -3,6 +3,7 @@ import cv2
 import imutils
 import f_liveness_detection
 import questions
+import time
 
 # instantiate camera
 cv2.namedWindow('liveness_detection')
@@ -26,7 +27,7 @@ def show_image(cam,text,color = (0,0,255)):
     cv2.putText(im,text,(10,50),cv2.FONT_HERSHEY_COMPLEX,1,color,2)
     return im
 
-
+start_time = time.time()
 for i_questions in range(0,limit_questions):
     # generate random question
     index_question = random.randint(0,3)
@@ -98,3 +99,5 @@ for i_questions in range(0,limit_questions):
 
     else:
         continue
+end_time = time.time()
+print(end_time - start_time)
