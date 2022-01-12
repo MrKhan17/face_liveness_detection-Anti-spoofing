@@ -16,7 +16,7 @@ blink_detector           = f_blink_detection.eye_blink_detector()
 
 
 
-def detect_liveness(im,COUNTER=0,TOTAL=0):
+def detect_liveness(im,question,COUNTER=0,TOTAL=0):
     # preprocess data
     gray = gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
@@ -40,43 +40,89 @@ def detect_liveness(im,COUNTER=0,TOTAL=0):
             - emotion: ['happy'] or ['neutral'] ...
             - box: [[579, 170, 693, 284]]
         '''
-        _,emotion = emotion_detector.get_emotion(im,boxes_face)
+        if question == "smile":
+            _,emotion = emotion_detector.get_emotion(im,boxes_face)
+
+            output = {
+                # 'box_face_frontal': boxes_face,
+                # 'box_orientation': box_orientation,
+                'emotion': emotion,
+                # 'orientation': orientation,
+                # 'total_blinks': TOTAL,
+                # 'count_blinks_consecutives': COUNTER
+            }
+
+            return output
         # -------------------------------------- blink_detection ---------------------------------------
-        '''
-        input:
-            - imagen gray
-            - rectangles
-        output:
-            - status: "ok"
-            - COUNTER: # frames consecutivos por debajo del umbral
-            - TOTAL: # de parpadeos
-        '''
-        COUNTER,TOTAL = blink_detector.eye_blink(gray,rectangles,COUNTER,TOTAL)
+        # '''
+        # input:
+        #     - imagen gray
+        #     - rectangles
+        # output:
+        #     - status: "ok"
+        #     - COUNTER: # consecutive frames below threshold
+        #     - TOTAL: # of blinks
+        # '''
+        elif question == "blink eyes":
+            TOTAL_0 = TOTAL
+            COUNTER,TOTAL = blink_detector.eye_blink(gray,rectangles,COUNTER,TOTAL)
+
+            dif_blink = TOTAL - TOTAL_0
+            if dif_blink > 0:
+                blinks_up = 1
+            else:
+                blinks_up = 0
+
+            output = {
+                # 'box_face_frontal': boxes_face,
+                # 'box_orientation': box_orientation,
+                # 'emotion': emotion,
+                # 'orientation': orientation,
+                'total_blinks': TOTAL,
+                'count_blinks_consecutives': COUNTER,
+                'blinks_up': blinks_up
+            }
+
+            return output
+
+        # -------------------------------------- profile_detection ---------------------------------------
+        # '''
+        #     input:
+        #         - imagen gray
+        #     output:
+        #         - status: "ok"
+        #         - profile: ["right"] or ["left"]
+        #         - box: [[579, 170, 693, 284]]
+        #     '''
+        elif question == "turn face left" or question == "turn face right":
+            box_orientation, orientation = profile_detector.face_orientation(gray)
+
+            output = {
+                    # 'box_face_frontal': boxes_face,
+                    # 'box_orientation': box_orientation,
+                    # 'emotion': emotion,
+                    'orientation': orientation
+                    # 'total_blinks': TOTAL,
+                    # 'count_blinks_consecutives': COUNTER
+            }
+
+            return output
+
     else:
-        boxes_face = []
+        # boxes_face = []
         emotion = []
         TOTAL = 0
         COUNTER = 0
-
-    # -------------------------------------- profile_detection ---------------------------------------
-    '''
-    input:
-        - imagen gray
-    output:
-        - status: "ok"
-        - profile: ["right"] or ["left"]
-        - box: [[579, 170, 693, 284]]
-    '''
-    box_orientation, orientation = profile_detector.face_orientation(gray)
+        orientation = 'fail'
 
     # -------------------------------------- output ---------------------------------------
-    output = {
-        'box_face_frontal': boxes_face,
-        'box_orientation': box_orientation,
-        'emotion': emotion,
-        'orientation': orientation,
-        'total_blinks': TOTAL,
-        'count_blinks_consecutives': COUNTER
-    }
-    return output
+        output = {
+            # 'box_face_frontal': boxes_face,
+            # 'box_orientation': box_orientation,
+            'emotion': emotion,
+            'orientation': orientation,
+            'total_blinks': TOTAL,
+            'count_blinks_consecutives': COUNTER
+        }
+        return output
 

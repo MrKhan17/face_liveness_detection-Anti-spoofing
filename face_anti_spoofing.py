@@ -45,16 +45,16 @@ for i_questions in range(0,limit_questions):
         im = cv2.flip(im, 1)
         # <----------------------- receive data
         TOTAL_0 = TOTAL
-        out_model = f_liveness_detection.detect_liveness(im,COUNTER,TOTAL_0)
-        TOTAL = out_model['total_blinks']
-        COUNTER = out_model['count_blinks_consecutives']
-        dif_blink = TOTAL-TOTAL_0
-        if dif_blink > 0:
-            blinks_up = 1
-        else:
-            blinks_up = 0
+        out_model = f_liveness_detection.detect_liveness(im,question,COUNTER,TOTAL_0)
+        # TOTAL = out_model['total_blinks']
+        # COUNTER = out_model['count_blinks_consecutives']
+        # dif_blink = TOTAL-TOTAL_0
+        # if dif_blink > 0:
+        #     blinks_up = 1
+        # else:
+        #     blinks_up = 0
 
-        challenge_res = questions.challenge_result(question, out_model,blinks_up)
+        challenge_res = questions.challenge_result(question, out_model)
 
         im = show_image(cam,question)
         cv2.imshow('liveness_detection',im)
