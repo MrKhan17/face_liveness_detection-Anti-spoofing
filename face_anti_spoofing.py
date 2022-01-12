@@ -16,7 +16,7 @@ counter_ok_consecutives = 0
 limit_consecutives = 3
 limit_questions = 3
 counter_try = 0
-limit_try = 50 
+limit_try = 150
 
 
 
@@ -33,10 +33,10 @@ for i_questions in range(0,limit_questions):
     index_question = random.randint(0,3)
     question = questions.question_bank(index_question)
     
-    im = show_image(cam,question)
-    cv2.imshow('liveness_detection',im)
-    if cv2.waitKey(1) &0xFF == ord('q'):
-        break 
+    # im = show_image(cam,question)
+    # cv2.imshow('liveness_detection',im)
+    # if cv2.waitKey(1) &0xFF == ord('q'):
+    #     break
 
     for i_try in range(limit_try):
         # <----------------------- receive data
@@ -44,43 +44,44 @@ for i_questions in range(0,limit_questions):
         im = imutils.resize(im, width=720)
         im = cv2.flip(im, 1)
         # <----------------------- receive data
-        TOTAL_0 = TOTAL
-        out_model = f_liveness_detection.detect_liveness(im,question,COUNTER,TOTAL_0)
-        # TOTAL = out_model['total_blinks']
-        # COUNTER = out_model['count_blinks_consecutives']
-        # dif_blink = TOTAL-TOTAL_0
-        # if dif_blink > 0:
-        #     blinks_up = 1
-        # else:
-        #     blinks_up = 0
+        if i_try%5==0:
+            TOTAL_0 = TOTAL
+            out_model = f_liveness_detection.detect_liveness(im,question,COUNTER,TOTAL_0)
+            # TOTAL = out_model['total_blinks']
+            # COUNTER = out_model['count_blinks_consecutives']
+            # dif_blink = TOTAL-TOTAL_0
+            # if dif_blink > 0:
+            #     blinks_up = 1
+            # else:
+            #     blinks_up = 0
 
-        challenge_res = questions.challenge_result(question, out_model)
+            challenge_res = questions.challenge_result(question, out_model)
 
-        im = show_image(cam,question)
-        cv2.imshow('liveness_detection',im)
-        if cv2.waitKey(1) &0xFF == ord('q'):
-            break 
-
-        if challenge_res == "pass":
-            im = show_image(cam,question+" : ok")
+            im = show_image(cam,question)
             cv2.imshow('liveness_detection',im)
             if cv2.waitKey(1) &0xFF == ord('q'):
                 break
 
-            counter_ok_consecutives += 1
-            if counter_ok_consecutives == limit_consecutives:
-                counter_ok_questions += 1
-                counter_try = 0
-                counter_ok_consecutives = 0
-                break
-            else:
-                continue
+            if challenge_res == "pass":
+                im = show_image(cam,question+" : ok")
+                cv2.imshow('liveness_detection',im)
+                if cv2.waitKey(1) &0xFF == ord('q'):
+                    break
 
-        elif challenge_res == "fail":
-            counter_try += 1
-            show_image(cam,question+" : fail")
-        elif i_try == limit_try-1:
-            break
+                counter_ok_consecutives += 1
+                if counter_ok_consecutives == limit_consecutives:
+                    counter_ok_questions += 1
+                    counter_try = 0
+                    counter_ok_consecutives = 0
+                    break
+                else:
+                    continue
+
+            elif challenge_res == "fail":
+                counter_try += 1
+                show_image(cam,question+" : fail")
+            # elif i_try == limit_try-1:
+            #     break
             
 
     if counter_ok_questions ==  limit_questions:
