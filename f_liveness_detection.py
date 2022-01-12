@@ -64,14 +64,14 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
         #     - TOTAL: # of blinks
         # '''
         elif question == "blink eyes":
-            TOTAL_0 = TOTAL
+            # TOTAL_0 = TOTAL
             COUNTER,TOTAL = blink_detector.eye_blink(gray,rectangles,COUNTER,TOTAL)
 
-            dif_blink = TOTAL - TOTAL_0
-            if dif_blink > 0:
-                blinks_up = 1
-            else:
-                blinks_up = 0
+            # dif_blink = TOTAL - 0
+            # if dif_blink > 0:
+            #     blinks_up = 1
+            # else:
+            #     blinks_up = 0
 
             output = {
                 # 'box_face_frontal': boxes_face,
@@ -80,7 +80,7 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
                 # 'orientation': orientation,
                 'total_blinks': TOTAL,
                 'count_blinks_consecutives': COUNTER,
-                'blinks_up': blinks_up
+                # 'blinks_up': blinks_up
             }
 
             return output
