@@ -4,11 +4,11 @@ detect_perfil_face = 'profile_detection/haarcascades/haarcascade_profileface.xml
 
 # -------------------------------------- emotion_detection ---------------------------------------
 # emotion detection model
-path_model = 'emotion_detection/Model/model_dropout.hdf5'
+# path_model = 'emotion_detection/Model/model_dropout.hdf5'
 # Model parameters, the image must be converted to a 48x48 grayscale size
-w,h = 48,48
-rgb = False
-labels = ['angry','disgust','fear','happy','neutral','sad','surprise']
+# w,h = 48,48
+# rgb = False
+# labels = ['angry','disgust','fear','happy','neutral','sad','surprise']
 
 
 # define the aspect ratio of the EAT eye

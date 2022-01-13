@@ -1,6 +1,6 @@
-import random 
+# import random
 import cv2
-import imutils
+# import imutils
 import f_liveness_detection
 import questions
 import time
@@ -13,7 +13,7 @@ cam = cv2.VideoCapture(0)
 COUNTER, TOTAL = 0,0
 counter_ok_questions = 0
 counter_ok_consecutives = 0
-limit_consecutives = 3
+limit_consecutives = 4
 limit_questions = 3
 counter_try = 0
 limit_try = 150
@@ -22,16 +22,17 @@ limit_try = 150
 
 def show_image(cam,text,color = (0,0,255)):
     ret, im = cam.read()
-    im = imutils.resize(im, width=720)
+    im = cv2.resize(im, (720, 560))
+    # im = imutils.resize(im, width=720)
     #im = cv2.flip(im, 1)
     cv2.putText(im,text,(10,50),cv2.FONT_HERSHEY_COMPLEX,1,color,2)
     return im
 
-start_time = time.time()
+
 for i_questions in range(0,limit_questions):
     # generate random question
-    index_question = random.randint(0,3)
-    question = questions.question_bank(index_question)
+    # index_question = random.randint(0,2)
+    question = questions.question_bank(i_questions)
     
     # im = show_image(cam,question)
     # cv2.imshow('liveness_detection',im)
@@ -41,7 +42,8 @@ for i_questions in range(0,limit_questions):
     for i_try in range(limit_try):
         # <----------------------- receive data
         ret, im = cam.read()
-        im = imutils.resize(im, width=720)
+        im = cv2.resize(im,(720,560))
+        # im = imutils.resize(im, width=720)
         im = cv2.flip(im, 1)
         # <----------------------- receive data
         if i_try%5==0:
@@ -100,5 +102,3 @@ for i_questions in range(0,limit_questions):
 
     else:
         continue
-end_time = time.time()
-print(end_time - start_time)

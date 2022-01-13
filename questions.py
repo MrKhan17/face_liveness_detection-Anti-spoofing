@@ -1,21 +1,21 @@
 def question_bank(index):
     questions = [
-                "smile",
+                # "smile",
                 "blink eyes",
                 "turn face right",
                 "turn face left"]
     return questions[index]
 
 def challenge_result(question, out_model):
-    if question == "smile":
-        if len(out_model["emotion"]) == 0:
-            challenge = "fail"
-        elif out_model["emotion"][0] == "happy": 
-            challenge = "pass"
-        else:
-            challenge = "fail"
+    # if question == "smile":
+    #     if len(out_model["emotion"]) == 0:
+    #         challenge = "fail"
+    #     elif out_model["emotion"][0] == "happy":
+    #         challenge = "pass"
+    #     else:
+    #         challenge = "fail"
 
-    elif question == "turn face right":
+    if question == "turn face right":
         if len(out_model["orientation"]) == 0:
             challenge = "fail"
         elif out_model["orientation"][0] == "right":

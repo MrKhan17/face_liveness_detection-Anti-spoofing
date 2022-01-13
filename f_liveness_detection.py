@@ -1,24 +1,23 @@
 import cv2
-import imutils
 import f_utils
 import dlib
 import numpy as np
 from profile_detection import f_detector
-from emotion_detection import f_emotion_detection
+# from emotion_detection import f_emotion_detection
 from blink_detection import f_blink_detection
 
 
 # instantiate detectores
 frontal_face_detector    = dlib.get_frontal_face_detector()
 profile_detector         = f_detector.detect_face_orientation()
-emotion_detector         = f_emotion_detection.predict_emotions()
+# emotion_detector         = f_emotion_detection.predict_emotions()
 blink_detector           = f_blink_detection.eye_blink_detector() 
 
 
 
 def detect_liveness(im,question,COUNTER=0,TOTAL=0):
     # preprocess data
-    gray = gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
     # face detection
     rectangles = frontal_face_detector(gray, 0)
@@ -40,19 +39,19 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
             - emotion: ['happy'] or ['neutral'] ...
             - box: [[579, 170, 693, 284]]
         '''
-        if question == "smile":
-            _,emotion = emotion_detector.get_emotion(im,boxes_face)
-
-            output = {
-                # 'box_face_frontal': boxes_face,
-                # 'box_orientation': box_orientation,
-                'emotion': emotion,
-                # 'orientation': orientation,
-                # 'total_blinks': TOTAL,
-                # 'count_blinks_consecutives': COUNTER
-            }
-
-            return output
+        # if question == "smile":
+        #     _,emotion = emotion_detector.get_emotion(im,boxes_face)
+        #
+        #     output = {
+        #         # 'box_face_frontal': boxes_face,
+        #         # 'box_orientation': box_orientation,
+        #         'emotion': emotion,
+        #         # 'orientation': orientation,
+        #         # 'total_blinks': TOTAL,
+        #         # 'count_blinks_consecutives': COUNTER
+        #     }
+        #
+        #     return output
         # -------------------------------------- blink_detection ---------------------------------------
         # '''
         # input:
@@ -63,7 +62,7 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
         #     - COUNTER: # consecutive frames below threshold
         #     - TOTAL: # of blinks
         # '''
-        elif question == "blink eyes":
+        if question == "blink eyes":
             # TOTAL_0 = TOTAL
             COUNTER,TOTAL = blink_detector.eye_blink(gray,rectangles,COUNTER,TOTAL)
 
@@ -119,7 +118,7 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
         output = {
             # 'box_face_frontal': boxes_face,
             # 'box_orientation': box_orientation,
-            'emotion': emotion,
+            # 'emotion': emotion,
             'orientation': orientation,
             'total_blinks': TOTAL,
             'count_blinks_consecutives': COUNTER
