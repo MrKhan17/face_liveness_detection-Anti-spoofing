@@ -13,7 +13,7 @@ detect_perfil_face = 'profile_detection/haarcascades/haarcascade_profileface.xml
 
 # define the aspect ratio of the EAT eye
 # define the number of consecutive frames that must be below the threshold
-EYE_AR_THRESH = 0.23 #baseline
+EYE_AR_THRESH = 0.2 #baseline
 EYE_AR_CONSEC_FRAMES = 1
 
 # eye landmarks
