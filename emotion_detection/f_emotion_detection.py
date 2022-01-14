@@ -1,8 +1,8 @@
 import config as cfg
 import cv2
 import numpy as np
-from keras.models import load_model
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
 
 class predict_emotions():
     def __init__(self):
