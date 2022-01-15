@@ -34,6 +34,13 @@ class detect_face_orientation():
         # create the face profile detector
         self.detect_perfil_face = cv2.CascadeClassifier(cfg.detect_perfil_face)
     def face_orientation(self,gray):
+        # frontal_face
+        box_frontal, w_frontal = detect(gray, self.detect_frontal_face)
+        if len(box_frontal) == 0:
+            box_frontal = []
+            name_frontal = []
+        else:
+            name_frontal = len(box_frontal) * ["frontal"]
         # left_face
         box_left, w_left = detect(gray,self.detect_perfil_face)
         if len(box_left)==0:
@@ -51,8 +58,8 @@ class detect_face_orientation():
             box_right = convert_rightbox(gray,box_right)
             name_right = len(box_right)*["right"]
 
-        boxes = list(box_left)+list(box_right)
-        names = list(name_left)+list(name_right)
+        boxes = list(box_left)+list(box_right)+list(box_frontal)
+        names = list(name_left)+list(name_right)+list(name_frontal)
         if len(boxes)==0:
             return boxes, names
         else:

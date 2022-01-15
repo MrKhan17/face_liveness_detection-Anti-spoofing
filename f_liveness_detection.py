@@ -94,7 +94,7 @@ def detect_liveness(im,question,COUNTER=0,TOTAL=0):
         #         - profile: ["right"] or ["left"]
         #         - box: [[579, 170, 693, 284]]
         #     '''
-        elif question == "turn face left" or question == "turn face right":
+        elif question == "turn face left" or question == "turn face right" or question == "look front":
             box_orientation, orientation = profile_detector.face_orientation(gray)
 
             output = {
